@@ -1,12 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "./pages";
+import { Home, NewAssignment } from "./pages";
+import { Navbar } from "./components";
 
 function App() {
     return (
-        <div>
+        <div className="h-full bg-gray-100">
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<Home />} />
+                <Route path="/assignments/:id" element={<NewAssignment />} />
             </Routes>
         </div>
     );
