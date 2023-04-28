@@ -13,8 +13,8 @@ export const Navbar = () => {
             <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-2">
                 <Link className="flex items-center">
                     <img
-                        src="https://thenounproject.com/api/private/icons/4042324/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0&token=gAAAAABkSdmBh6SHdd2EltnT1bFD4zjXGB9BqHu2WHvwkAnXGOa5igTFqoz-nyOAtFrugzvPLJ232LQ8SqPch8-ZyA55ny_LbQ%3D%3D"
-                        className="mr-3 h-14"
+                        src="https://www.clipartmax.com/png/middle/156-1565959_meeting-planner-icon-weekdays-icon.png"
+                        className="mr-3 h-10"
                         alt="Planner Icon"
                     />
                     <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
