@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { getAllCourses } from "../../services";
+import { createAssignment, getAllCourses } from "../../services";
 import { LoadSpinner } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 export const NewAssignment = () => {
     const {
@@ -19,6 +20,13 @@ export const NewAssignment = () => {
         getAllCourses()
     );
 
+    const mutation = useMutation({
+        mutationFn: (newAssignment) => createAssignment(newAssignment),
+        onError: (error) => console.log(error),
+    });
+
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className="mx-auto my-2 w-1/2 rounded bg-white px-2 py-4 shadow">
@@ -34,6 +42,8 @@ export const NewAssignment = () => {
                         onSubmit={handleSubmit(
                             (data) => {
                                 console.log(data);
+                                mutation.mutate(data);
+                                navigate("/classes");
                             },
                             (errors) => console.log(errors)
                         )}
@@ -45,7 +55,7 @@ export const NewAssignment = () => {
                             <input
                                 type="text"
                                 className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
-                                {...register("assignmentName", {
+                                {...register("name", {
                                     required: "Assignment name is required",
                                 })}
                             />
@@ -84,7 +94,7 @@ export const NewAssignment = () => {
                             </label>
                             <select
                                 className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
-                                {...register("course")}
+                                {...register("course", { valueAsNumber: true })}
                             >
                                 {classes?.map((oneClass) => (
                                     <option
