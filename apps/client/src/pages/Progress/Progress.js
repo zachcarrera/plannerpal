@@ -1,5 +1,5 @@
 import React from "react";
-import { ProgressBar } from "../../components";
+import { ProgressBar, LoadSpinner } from "../../components";
 import { getAllCourses } from "../../services";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,6 +12,7 @@ export const Progress = () => {
         <div className="mx-auto my-4 w-1/2 bg-white py-2">
             <h1 className="mb-4 text-center text-3xl">Progress</h1>
 
+            {isLoading && <LoadSpinner />}
             {/* map over classes here */}
             {classes?.map((oneClass) => (
                 <div key={oneClass.id} className="mx-auto my-2 w-3/4 ">
