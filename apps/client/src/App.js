@@ -6,6 +6,7 @@ import {
     Login,
     NewAssignment,
     Progress,
+    Register,
 } from "./pages";
 import { Navbar } from "./components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -20,6 +21,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/classes" element={<Classes />} />
                     <Route path="/progress" element={<Progress />} />
                     <Route path="/calendar" element={<Calendar />} />
