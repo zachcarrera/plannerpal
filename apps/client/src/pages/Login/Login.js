@@ -23,7 +23,7 @@ export const Login = () => {
                         Email
                     </label>
                     <input
-                        type="text"
+                        type="email"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
                     />
                 </div>
