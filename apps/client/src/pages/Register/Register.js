@@ -19,7 +19,13 @@ export const Register = () => {
             >
                 Already have an account? Log in here.
             </Link>
-            <form className="mx-auto mt-2 w-1/2">
+            <form
+                className="mx-auto mt-2 w-1/2"
+                onSubmit={handleSubmit(
+                    (data) => console.log(data),
+                    (errors) => console.log(errors)
+                )}
+            >
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
                         First Name
@@ -27,7 +33,20 @@ export const Register = () => {
                     <input
                         type="text"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("firstName", {
+                            required: "First name is required",
+                            minLength: {
+                                value: 2,
+                                message:
+                                    "First name must be atleast 2 characters",
+                            },
+                        })}
                     />
+                    {errors.firstName && (
+                        <p className="mt-2 text-red-500">
+                            {errors.firstName.message}
+                        </p>
+                    )}
                 </div>
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
@@ -36,7 +55,20 @@ export const Register = () => {
                     <input
                         type="text"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("lastName", {
+                            required: "Last name is required",
+                            minLength: {
+                                value: 2,
+                                message:
+                                    "Last name must be atleast 2 characters",
+                            },
+                        })}
                     />
+                    {errors.lastName && (
+                        <p className="mt-2 text-red-500">
+                            {errors.lastName.message}
+                        </p>
+                    )}
                 </div>
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
@@ -45,7 +77,15 @@ export const Register = () => {
                     <input
                         type="email"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("email", {
+                            required: "Email is required",
+                        })}
                     />
+                    {errors.email && (
+                        <p className="mt-2 text-red-500">
+                            {errors.email.message}
+                        </p>
+                    )}
                 </div>
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
@@ -54,7 +94,15 @@ export const Register = () => {
                     <input
                         type="password"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("password", {
+                            required: "Password is required",
+                        })}
                     />
+                    {errors.password && (
+                        <p className="mt-2 text-red-500">
+                            {errors.password.message}
+                        </p>
+                    )}
                 </div>
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
@@ -63,7 +111,15 @@ export const Register = () => {
                     <input
                         type="password"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("confirmPassword", {
+                            required: "Confirm Password is required",
+                        })}
                     />
+                    {errors.confirmPassword && (
+                        <p className="mt-2 text-red-500">
+                            {errors.confirmPassword.message}
+                        </p>
+                    )}
                 </div>
                 <button
                     type="submit"
