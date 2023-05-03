@@ -17,7 +17,13 @@ export const Login = () => {
             >
                 Don't have an account? Register here.
             </Link>
-            <form className="mx-auto w-1/2">
+            <form
+                className="mx-auto w-1/2"
+                onSubmit={handleSubmit(
+                    (data) => console.log(data),
+                    (errors) => console.log(errors)
+                )}
+            >
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
                         Email
@@ -25,7 +31,15 @@ export const Login = () => {
                     <input
                         type="email"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("email", {
+                            required: "Email is required",
+                        })}
                     />
+                    {errors.email && (
+                        <p className="mt-2 text-red-500">
+                            {errors.email.message}
+                        </p>
+                    )}
                 </div>
                 <div className="mb-2">
                     <label className="text-base font-medium text-gray-700">
@@ -34,7 +48,15 @@ export const Login = () => {
                     <input
                         type="password"
                         className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
+                        {...register("password", {
+                            required: "Password is required",
+                        })}
                     />
+                    {errors.password && (
+                        <p className="mt-2 text-red-500">
+                            {errors.password.message}
+                        </p>
+                    )}
                 </div>
                 <button
                     type="submit"
