@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.zachcarrera.server.models.Role;
+import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.repositories.AssignmentRepository;
 import com.zachcarrera.server.repositories.CourseRepository;
 import com.zachcarrera.server.repositories.RoleRepository;
+import com.zachcarrera.server.repositories.UserRepository;
 
 @Component
 public class DatabaseInitializer implements ApplicationListener<ApplicationReadyEvent>{
@@ -23,6 +26,12 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
 
     @Autowired
     private AssignmentRepository assignmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -36,6 +45,10 @@ public class DatabaseInitializer implements ApplicationListener<ApplicationReady
         // assignmentRepository.save(new Assignment("Project Manager", new Date(1688972400000L), 3));
         // assignmentRepository.saveAll(List.of(new Assignment("CareSoft", new Date(1688972400000L), 4), new Assignment("Book Club", new Date(1688972400000L), 2)));
         roleRepository.saveAll(List.of(new Role("ROLE_STUDENT"), new Role("ROLE_INSTRUCTOR")));
+
+
+        userRepository.save(new User("Zach", "Carrera", "zach@mail.com", passwordEncoder.encode("password")));
+
         System.out.println("app started");
         
     }
