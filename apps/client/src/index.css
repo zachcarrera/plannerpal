@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .active {
-    @apply bg-blue-700 text-white md:bg-transparent md:text-blue-700 md:dark:text-blue-500;
+    @apply bg-blue-700 text-white after:w-full md:bg-transparent md:text-blue-700 md:dark:text-blue-500;
 }
 
 body {

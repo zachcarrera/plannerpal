@@ -61,7 +61,7 @@ export const Navbar = () => {
                         <li>
                             <NavLink
                                 to="/"
-                                className="text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                                className="relative block rounded py-2 pl-3 pr-4 text-gray-900 transition duration-300 after:absolute after:-bottom-1  after:left-0 after:h-0.5 after:w-0  after:bg-blue-700 after:transition-[width] after:content-[''] hover:bg-gray-100 after:hover:w-full dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                             >
                                 Home
                             </NavLink>
@@ -69,7 +69,7 @@ export const Navbar = () => {
                         <li>
                             <NavLink
                                 to="/classes"
-                                className="block rounded py-2 pl-3 pr-4 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                                className="relative block rounded py-2 pl-3 pr-4 text-gray-900 transition duration-300 after:absolute after:-bottom-1  after:left-0 after:h-0.5 after:w-0  after:bg-blue-700 after:transition-[width] after:content-[''] hover:bg-gray-100 after:hover:w-full dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                             >
                                 Classes
                             </NavLink>
@@ -77,7 +77,7 @@ export const Navbar = () => {
                         <li>
                             <NavLink
                                 to="/progress"
-                                className="block rounded py-2 pl-3 pr-4 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                                className="relative block rounded py-2 pl-3 pr-4 text-gray-900 transition duration-300 after:absolute after:-bottom-1  after:left-0 after:h-0.5 after:w-0  after:bg-blue-700 after:transition-[width] after:content-[''] hover:bg-gray-100 after:hover:w-full dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                             >
                                 Progress
                             </NavLink>
@@ -85,7 +85,7 @@ export const Navbar = () => {
                         <li>
                             <NavLink
                                 to="/calendar"
-                                className="block rounded py-2 pl-3 pr-4 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                                className="relative block rounded py-2 pl-3 pr-4 text-gray-900 transition duration-300 after:absolute after:-bottom-1  after:left-0 after:h-0.5 after:w-0  after:bg-blue-700 after:transition-[width] after:content-[''] hover:bg-gray-100 after:hover:w-full dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                             >
                                 Calendar
                             </NavLink>
@@ -93,7 +93,7 @@ export const Navbar = () => {
                         <li>
                             <NavLink
                                 to="/assignments/new"
-                                className="block rounded py-2 pl-3 pr-4 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                                className="relative block rounded py-2 pl-3 pr-4 text-gray-900 transition duration-300 after:absolute after:-bottom-1  after:left-0 after:h-0.5 after:w-0  after:bg-blue-700 after:transition-[width] after:content-[''] hover:bg-gray-100 after:hover:w-full dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
                             >
                                 + New Assignment
                             </NavLink>
