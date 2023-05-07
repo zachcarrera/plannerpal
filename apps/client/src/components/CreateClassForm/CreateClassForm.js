@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export const CreateClassForm = () => {
+export const CreateClassForm = ({ handleToggle }) => {
     const {
         register,
         handleSubmit,
@@ -11,7 +11,10 @@ export const CreateClassForm = () => {
         <div>
             <form
                 onSubmit={handleSubmit(
-                    (data) => console.log(data),
+                    (data) => {
+                        console.log(data);
+                        handleToggle();
+                    },
                     (error) => console.log(error)
                 )}
             >
@@ -29,6 +32,11 @@ export const CreateClassForm = () => {
                             required: "Class name is required",
                         })}
                     />
+                    {errors.name && (
+                        <p className="mt-2 text-red-500">
+                            {errors.name.message}
+                        </p>
+                    )}
                 </div>
                 <button
                     type="submit"
