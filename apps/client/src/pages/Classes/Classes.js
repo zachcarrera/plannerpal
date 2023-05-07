@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useState } from "react";
 import { CreateClassForm, LoadSpinner } from "../../components";
 import { getAllCourses } from "../../services";
 
@@ -7,6 +8,7 @@ export const Classes = () => {
     const { data: classes, isLoading } = useQuery(["classes"], () =>
         getAllCourses()
     );
+    const [toggleForm, setToggleForm] = useState(false);
 
     return (
         <div className="mx-auto my-2 w-1/2 rounded bg-white p-2 shadow">
@@ -29,7 +31,18 @@ export const Classes = () => {
             ))} */}
 
             <div className="mx-auto w-3/4">
-                <CreateClassForm />
+                {toggleForm ? (
+                    <CreateClassForm
+                        handleToggle={() => setToggleForm(false)}
+                    />
+                ) : (
+                    <button
+                        onClick={() => setToggleForm(true)}
+                        className=" ml-auto block rounded bg-blue-600 px-4 py-2 text-lg font-normal text-white hover:bg-blue-500"
+                    >
+                        + Add
+                    </button>
+                )}
                 <h2 className="text-center text-2xl">Class 1</h2>
                 <ul>
                     <li>Assignment 1</li>
