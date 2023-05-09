@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 export const Navbar = () => {
     const [togglerNav, setTogglerNav] = useState(false);
+    const { auth, setAuth } = useAuth();
 
     const toggleLinks = () => {
         setTogglerNav(!togglerNav);
@@ -22,12 +24,21 @@ export const Navbar = () => {
                     </span>
                 </Link>
                 <div className="flex md:order-2">
-                    <Link
-                        to="/login"
-                        className="mr-3 rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 md:mr-0"
-                    >
-                        Log In
-                    </Link>
+                    {auth?.token ? (
+                        <button
+                            onClick={() => setAuth({})}
+                            className="mr-3 rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 md:mr-0"
+                        >
+                            Log Out
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="mr-3 rounded-lg bg-blue-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 md:mr-0"
+                        >
+                            Log In
+                        </Link>
+                    )}
                     <button
                         onClick={() => toggleLinks()}
                         type="button"
