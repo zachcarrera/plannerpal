@@ -8,29 +8,37 @@ import {
     Progress,
     Register,
 } from "./pages";
-import { Navbar } from "./components";
+import { Navbar, RequireAuth } from "./components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "./context";
 
 const queryClient = new QueryClient();
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <div className="h-screen bg-gray-100">
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/classes" element={<Classes />} />
-                    <Route path="/progress" element={<Progress />} />
-                    <Route path="/calendar" element={<Calendar />} />
-                    <Route
-                        path="/assignments/new"
-                        element={<NewAssignment />}
-                    />
-                </Routes>
-            </div>
+            <AuthProvider>
+                <div className="h-screen bg-gray-100">
+                    <Navbar />
+                    <Routes>
+                        {/* public routes */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+
+                        {/* protected routes */}
+                        <Route element={<RequireAuth />}>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/classes" element={<Classes />} />
+                            <Route path="/progress" element={<Progress />} />
+                            <Route path="/calendar" element={<Calendar />} />
+                            <Route
+                                path="/assignments/new"
+                                element={<NewAssignment />}
+                            />
+                        </Route>
+                    </Routes>
+                </div>
+            </AuthProvider>
         </QueryClientProvider>
     );
 }
