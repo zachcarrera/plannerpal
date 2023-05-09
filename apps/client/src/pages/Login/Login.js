@@ -1,6 +1,9 @@
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../services";
+import { useAuth } from "../../hooks";
 
 export const Login = () => {
     const {
@@ -8,6 +11,18 @@ export const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const navigate = useNavigate();
+    const { setAuth } = useAuth();
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => loginUser(formData),
+        onSuccess: (data) => {
+            setAuth(data);
+            navigate("/");
+        },
+        onError: (error) => console.log(error),
+    });
+
     return (
         <div className="mx-auto my-2 w-1/2 rounded bg-white px-2 py-4 shadow">
             <h1 className="mb-4 text-center text-3xl font-semibold">Login</h1>
@@ -20,7 +35,10 @@ export const Login = () => {
             <form
                 className="mx-auto w-1/2"
                 onSubmit={handleSubmit(
-                    (data) => console.log(data),
+                    (data) => {
+                        console.log(data);
+                        mutate(data);
+                    },
                     (errors) => console.log(errors)
                 )}
             >
