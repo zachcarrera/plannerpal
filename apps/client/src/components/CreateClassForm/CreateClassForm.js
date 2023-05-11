@@ -1,5 +1,7 @@
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { createCourse } from "../../services";
 
 export const CreateClassForm = ({ handleToggle }) => {
     const {
@@ -7,6 +9,11 @@ export const CreateClassForm = ({ handleToggle }) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => createCourse(formData),
+    });
+
     return (
         <div>
             <form
