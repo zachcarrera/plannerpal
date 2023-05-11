@@ -21,6 +21,9 @@ import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.repositories.UserRepository;
 import com.zachcarrera.server.services.UserDetailsServiceImpl;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/auth")
@@ -44,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = (User) userDetailsService.loadUserByUsername(request.getEmail());
 
@@ -53,6 +56,11 @@ public class AuthController {
             List<String> roles = user.getAuthorities().stream()
                                     .map(item -> item.getAuthority())
                                     .collect(Collectors.toList());
+
+            Cookie cookie = new Cookie("jwt", jwt);
+
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
             return ResponseEntity.ok().body(new AuthenticationResponse(jwt, user.getId(), user.getFirstName(), user.getUsername(), roles));
         }
 
