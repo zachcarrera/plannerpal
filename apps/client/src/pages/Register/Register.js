@@ -13,6 +13,10 @@ export const Register = () => {
 
     const { mutate } = useMutation({
         mutationFn: (formData) => registerUser(formData),
+        onSuccess: (data) => {
+            console.log(data);
+            console.log("register went through");
+        },
     });
 
     return (
@@ -29,7 +33,10 @@ export const Register = () => {
             <form
                 className="mx-auto mt-2 w-1/2"
                 onSubmit={handleSubmit(
-                    (data) => console.log(data),
+                    (data) => {
+                        console.log(data);
+                        mutate(data);
+                    },
                     (errors) => console.log(errors)
                 )}
             >
