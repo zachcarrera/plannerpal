@@ -1,6 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { registerUser } from "../../services";
 
 export const Register = () => {
     const {
@@ -8,6 +10,11 @@ export const Register = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => registerUser(formData),
+    });
+
     return (
         <div className="mx-auto my-2 w-1/2 rounded bg-white px-2 py-4 shadow">
             <h1 className="mb-4 text-center text-3xl font-semibold">
