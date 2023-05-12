@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zachcarrera.server.config.JwtUtils;
 import com.zachcarrera.server.dto.AuthenticationRequest;
 import com.zachcarrera.server.dto.AuthenticationResponse;
+import com.zachcarrera.server.dto.RegisterRequest;
 import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.repositories.UserRepository;
 import com.zachcarrera.server.services.UserDetailsServiceImpl;
@@ -40,6 +41,10 @@ public class AuthController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+
+    @Autowired
+    UserDetailsServiceImpl userService;
 
     @GetMapping("")
     public String test() {
@@ -68,7 +73,18 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register() {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        User registeredUser = userDetailsService.registerUser(request);
         return null;
     }
 
