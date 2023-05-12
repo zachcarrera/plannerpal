@@ -21,6 +21,7 @@ import com.zachcarrera.server.dto.RegisterRequest;
 import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.repositories.UserRepository;
 import com.zachcarrera.server.services.UserDetailsServiceImpl;
+import com.zachcarrera.server.services.UserService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +33,7 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -40,11 +41,10 @@ public class AuthController {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private JwtUtils jwtUtils;
-
+    private UserService userService;
 
     @Autowired
-    UserDetailsServiceImpl userService;
+    private JwtUtils jwtUtils;
 
     @GetMapping("")
     public String test() {
@@ -53,20 +53,22 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = (User) userDetailsService.loadUserByUsername(request.getEmail());
 
         if (user != null) {
             String jwt = jwtUtils.generateToken(user);
             List<String> roles = user.getAuthorities().stream()
-                                    .map(item -> item.getAuthority())
-                                    .collect(Collectors.toList());
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
 
             Cookie cookie = new Cookie("jwt", jwt);
 
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-            return ResponseEntity.ok().body(new AuthenticationResponse(jwt, user.getId(), user.getFirstName(), user.getUsername(), roles));
+            return ResponseEntity.ok().body(
+                    new AuthenticationResponse(jwt, user.getId(), user.getFirstName(), user.getUsername(), roles));
         }
 
         return ResponseEntity.status(400).body("There was an error");
@@ -74,7 +76,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-
 
         if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().build();
@@ -84,13 +85,13 @@ public class AuthController {
             return ResponseEntity.badRequest().build();
         }
 
-        User registeredUser = userDetailsService.registerUser(request);
-        return null;
+        User registeredUser = userService.registerUser(request);
+        return ResponseEntity.ok().body("user registered");
     }
 
     @GetMapping("/users")
     public List<User> users() {
         return userRepository.findAll();
     }
-    
+
 }
