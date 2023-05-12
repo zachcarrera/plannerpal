@@ -67,6 +67,11 @@ public class AuthController {
         return ResponseEntity.status(400).body("There was an error");
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> register() {
+        return null;
+    }
+
     @GetMapping("/users")
     public List<User> users() {
         return userRepository.findAll();
