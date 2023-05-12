@@ -13,6 +13,11 @@ export const loginUser = async (loginRequest) => {
     return res.data;
 };
 
+export const registerUser = async (registerRequest) => {
+    const res = await http.post("/auth/register", registerRequest);
+    return res.data;
+};
+
 // ----- courses api -----
 
 export const getAllCourses = async () => {
