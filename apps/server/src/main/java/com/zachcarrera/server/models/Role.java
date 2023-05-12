@@ -10,16 +10,16 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
-    
+
     public Role() {
     }
 
@@ -49,6 +49,6 @@ public class Role {
 
     public void setUsers(List<User> users) {
         this.users = users;
-    } 
-    
+    }
+
 }

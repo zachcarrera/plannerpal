@@ -5,8 +5,6 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +24,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="assignments")
+@Table(name = "assignments")
 public class Assignment {
 
     @Id
@@ -51,8 +49,7 @@ public class Assignment {
     @JoinColumn(name = "course_id")
     private Course course;
 
-
-    @Column(updatable=false)
+    @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
@@ -60,8 +57,9 @@ public class Assignment {
     private Date updatedAt;
 
     // constructors
-    public Assignment() {}
-    
+    public Assignment() {
+    }
+
     public Assignment(String name) {
         this.name = name;
     }
@@ -71,6 +69,7 @@ public class Assignment {
         this.dueDate = dueDate;
         this.priority = priority;
     }
+
     public Assignment(String name, Date dueDate, Integer priority, Course course) {
         this.name = name;
         this.dueDate = dueDate;
@@ -78,7 +77,7 @@ public class Assignment {
         this.course = course;
     }
 
-	// createdAt updatedAt automation
+    // createdAt updatedAt automation
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
@@ -121,30 +120,29 @@ public class Assignment {
         this.updatedAt = updatedAt;
     }
 
-	public Date getDueDate() {
-		return dueDate;
-	}
+    public Date getDueDate() {
+        return dueDate;
+    }
 
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
 
-	public Integer getPriority() {
-		return priority;
-	}
+    public Integer getPriority() {
+        return priority;
+    }
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     @JsonBackReference
-	public Course getCourse() {
-		return course;
-	}
+    public Course getCourse() {
+        return course;
+    }
 
-	public void setCourse(Course course) {
-		this.course = course;
-	}
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
-    
 }

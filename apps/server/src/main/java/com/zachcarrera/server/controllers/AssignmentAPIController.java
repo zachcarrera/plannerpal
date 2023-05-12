@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,6 @@ import com.zachcarrera.server.models.Assignment;
 import com.zachcarrera.server.services.AssignmentService;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PutMapping;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,7 +33,6 @@ public class AssignmentAPIController {
     public ResponseEntity<List<Assignment>> allAssignments() {
         return ResponseEntity.ok().body(assignmentService.allAssignments());
     }
-
 
     // ----- ONE ASSIGNMENT -----
     @GetMapping("/{id}")
@@ -51,7 +49,7 @@ public class AssignmentAPIController {
 
         Assignment savedAssignment = assignmentService.createAssignment(assignment);
         return ResponseEntity.ok().body(savedAssignment);
-        
+
     }
 
     // ----- DELETE ASSIGNMENT -----
@@ -63,7 +61,8 @@ public class AssignmentAPIController {
 
     // ----- UPDATE ASSIGNMENT -----
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateAssignment(@PathVariable("id") Long id, @Valid @RequestBody Assignment assignment, BindingResult result) {
+    public ResponseEntity<Object> updateAssignment(@PathVariable("id") Long id,
+            @Valid @RequestBody Assignment assignment, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.status(400).body(result.getAllErrors());
         }
@@ -72,6 +71,4 @@ public class AssignmentAPIController {
         return ResponseEntity.ok().body(updatedAssignment);
     }
 
-
-    
 }

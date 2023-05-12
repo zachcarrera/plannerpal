@@ -50,6 +50,4 @@ public class RegisterRequest {
         this.confirmPassword = confirmPassword;
     }
 
-
-
 }

@@ -11,5 +11,5 @@ import com.zachcarrera.server.models.Course;
 public interface CourseRepository extends CrudRepository<Course, Long> {
 
     List<Course> findAll();
-    
+
 }

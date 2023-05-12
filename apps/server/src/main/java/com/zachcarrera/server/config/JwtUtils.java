@@ -44,22 +44,22 @@ public class JwtUtils {
         return createToken(claims, userDetails);
     }
 
-    public String generateToken(UserDetails userDetails, Map<String, Object> claims){
+    public String generateToken(UserDetails userDetails, Map<String, Object> claims) {
         return createToken(claims, userDetails);
     }
 
     private String createToken(Map<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder().setClaims(claims)
-                    .setSubject(userDetails.getUsername())
-                    .claim("authorities", userDetails.getAuthorities())
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
-                    .signWith(SignatureAlgorithm.HS256, jwtSigningKey).compact();
+                .setSubject(userDetails.getUsername())
+                .claim("authorities", userDetails.getAuthorities())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
+                .signWith(SignatureAlgorithm.HS256, jwtSigningKey).compact();
     }
 
     public Boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-    
+
 }

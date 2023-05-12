@@ -14,7 +14,7 @@ public class AssignmentService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
-     // ----- FIND ALL -----
+    // ----- FIND ALL -----
     public List<Assignment> allAssignments() {
         return assignmentRepository.findAll();
     }
@@ -43,6 +43,4 @@ public class AssignmentService {
         assignmentRepository.deleteById(id);
     }
 
-
-    
 }

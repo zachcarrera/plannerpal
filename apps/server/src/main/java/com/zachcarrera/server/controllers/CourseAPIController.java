@@ -33,7 +33,6 @@ public class CourseAPIController {
         return ResponseEntity.ok().body(courseService.allCourses());
     }
 
-
     // ----- ONE COURSE -----
     @GetMapping("/{id}")
     public ResponseEntity<Course> oneCourse(@PathVariable("id") Long id) {
@@ -49,7 +48,7 @@ public class CourseAPIController {
 
         Course savedCourse = courseService.createCourse(course);
         return ResponseEntity.ok().body(savedCourse);
-        
+
     }
 
     // ----- DELETE COURSE -----
@@ -61,7 +60,8 @@ public class CourseAPIController {
 
     // ----- UPDATE COURSE -----
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCourse(@PathVariable("id") Long id, @Valid @RequestBody Course course, BindingResult result) {
+    public ResponseEntity<Object> updateCourse(@PathVariable("id") Long id, @Valid @RequestBody Course course,
+            BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.status(400).body(result.getAllErrors());
         }

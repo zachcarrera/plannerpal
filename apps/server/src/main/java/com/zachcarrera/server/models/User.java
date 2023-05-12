@@ -28,9 +28,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="users")
-public class User implements UserDetails{
-    
+@Table(name = "users")
+public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +40,6 @@ public class User implements UserDetails{
 
     @NotEmpty
     private String lastName;
-
 
     @NotEmpty
     @Email
@@ -55,7 +54,7 @@ public class User implements UserDetails{
     @Size(max = 128)
     private String passwordConfirmation;
 
-    @Column(updatable=false)
+    @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
 
@@ -63,14 +62,12 @@ public class User implements UserDetails{
     private Date updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     // constructors
-    public User() {}
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -168,7 +165,7 @@ public class User implements UserDetails{
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-        for(Role role : roles) {
+        for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;

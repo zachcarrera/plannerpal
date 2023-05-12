@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -24,50 +22,47 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "courses")
 public class Course {
-    // mysql columns
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	// mysql columns
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
+	@NotBlank
+	private String name;
 
-    @NotBlank
-    private String name;
+	@Column(updatable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date createdAt;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date updatedAt;
 
-    @Column(updatable=false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdAt;
+	// @JsonIgnore
+	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+	private List<Assignment> assignments;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date updatedAt;
+	// constructors
+	public Course() {
+	}
 
-
-    // @JsonIgnore
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private List<Assignment> assignments;
-
-
-    // constructors
-    public Course() {}
-
-    public Course(Long id) {
+	public Course(Long id) {
 		this.id = id;
 	}
 
 	public Course(String name) {
-        this.name = name;
-    }
+		this.name = name;
+	}
 
-    // createdAt updatedAt automation
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
-    }
+	// createdAt updatedAt automation
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
-    }
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -101,12 +96,12 @@ public class Course {
 		this.updatedAt = updatedAt;
 	}
 
-    @JsonManagedReference
+	@JsonManagedReference
 	public List<Assignment> getAssignments() {
 		return assignments;
 	}
 
 	public void setAssignments(List<Assignment> assignments) {
 		this.assignments = assignments;
-	} 
+	}
 }
