@@ -1,9 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { createCourse } from "../../services";
 
 export const CreateClassForm = ({ handleToggle }) => {
+    const queryClient = useQueryClient();
     const {
         register,
         handleSubmit,
@@ -12,6 +13,8 @@ export const CreateClassForm = ({ handleToggle }) => {
 
     const { mutate } = useMutation({
         mutationFn: (formData) => createCourse(formData),
+        onSuccess: (data) =>
+            queryClient.invalidateQueries({ queryKey: ["classes"] }),
     });
 
     return (
@@ -20,6 +23,7 @@ export const CreateClassForm = ({ handleToggle }) => {
                 onSubmit={handleSubmit(
                     (data) => {
                         console.log(data);
+                        mutate(data);
                         handleToggle();
                     },
                     (error) => console.log(error)
