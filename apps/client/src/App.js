@@ -5,6 +5,7 @@ import {
     Home,
     Login,
     NewAssignment,
+    OneAssignment,
     Progress,
     Register,
 } from "./pages";
@@ -31,6 +32,10 @@ function App() {
                             <Route path="/classes" element={<Classes />} />
                             <Route path="/progress" element={<Progress />} />
                             <Route path="/calendar" element={<Calendar />} />
+                            <Route
+                                path="/assignments/:id"
+                                element={<OneAssignment />}
+                            />
                             <Route
                                 path="/assignments/new"
                                 element={<NewAssignment />}
