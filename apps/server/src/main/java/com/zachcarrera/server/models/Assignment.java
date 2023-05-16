@@ -49,6 +49,9 @@ public class Assignment {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @Column(columnDefinition = "tinyint(1) default 0")
+    private Boolean completed;
+
     @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
@@ -80,6 +83,7 @@ public class Assignment {
     // createdAt updatedAt automation
     @PrePersist
     protected void onCreate() {
+        this.completed = false;
         this.createdAt = new Date();
     }
 
@@ -143,6 +147,14 @@ public class Assignment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
 }
