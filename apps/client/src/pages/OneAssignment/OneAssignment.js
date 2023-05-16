@@ -6,14 +6,13 @@ import { LoadSpinner } from "../../components";
 
 export const OneAssignment = () => {
     const { id } = useParams();
-    const { data: assignment, isLoading } = useQuery(["assignment"], () =>
+    const { data: assignment, isLoading } = useQuery(["assignment", id], () =>
         getOneAssignment(id)
     );
 
     let dueDate;
     if (!isLoading) {
         dueDate = new Date(assignment.dueDate);
-        console.log(dueDate);
     }
     return (
         <div className="mx-auto my-2 w-1/2 rounded bg-white p-2 shadow">
