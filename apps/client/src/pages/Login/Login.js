@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../services";
+import { http, loginUser } from "../../services";
 import { useAuth } from "../../hooks";
 
 export const Login = () => {
@@ -17,7 +17,12 @@ export const Login = () => {
     const { mutate } = useMutation({
         mutationFn: (formData) => loginUser(formData),
         onSuccess: (data) => {
+            console.log(data);
             setAuth(data);
+            http.defaults.headers.common[
+                "Authorization"
+            ] = `Bearer ${data.token}`;
+            console.log(http.defaults.headers.common);
             navigate("/");
         },
         onError: (error) => console.log(error),
