@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CreateClassForm, LoadSpinner } from "../../components";
 import { getAllCourses } from "../../services";
 
@@ -23,7 +24,14 @@ export const Classes = () => {
                     ) : (
                         <ul>
                             {oneClass.assignments.map((assignment) => (
-                                <li key={assignment.id}>{assignment.name}</li>
+                                <li key={assignment.id}>
+                                    <Link
+                                        to={`/assignments/${assignment.id}`}
+                                        className="text-blue-600 underline underline-offset-2"
+                                    >
+                                        {assignment.name}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     )}
