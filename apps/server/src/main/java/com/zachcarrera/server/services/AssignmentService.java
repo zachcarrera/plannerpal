@@ -19,6 +19,10 @@ public class AssignmentService {
         return assignmentRepository.findAll();
     }
 
+    public List<Assignment> findNewestAssignments() {
+        return assignmentRepository.findTop3ByOrderByCreatedAtDesc();
+    }
+
     // ----- FIND ONE -----
     public Assignment findAssignment(Long id) {
         return assignmentRepository.findById(id)
