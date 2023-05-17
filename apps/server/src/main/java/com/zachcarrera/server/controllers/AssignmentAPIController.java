@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zachcarrera.server.models.Assignment;
+import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.services.AssignmentService;
 
 import jakarta.validation.Valid;
@@ -30,7 +33,16 @@ public class AssignmentAPIController {
 
     // ----- ALL ASSIGNMENTS -----
     @GetMapping("")
-    public ResponseEntity<List<Assignment>> allAssignments() {
+    public ResponseEntity<List<Assignment>> allAssignments(
+            @RequestParam(required = false, name = "sort_by") String sortBy) {
+
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedInUser.getFirstName());
+
+        if (sortBy != null) {
+            return ResponseEntity.ok().body((assignmentService.findNewestAssignments()));
+
+        }
         return ResponseEntity.ok().body(assignmentService.allAssignments());
     }
 
