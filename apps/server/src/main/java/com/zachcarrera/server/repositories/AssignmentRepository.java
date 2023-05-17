@@ -13,5 +13,7 @@ public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
 
     List<Assignment> findAll();
 
+    List<Assignment> findTop3ByOrderByCreatedAtDesc();
+
     Optional<Assignment> findByName(String name);
 }
