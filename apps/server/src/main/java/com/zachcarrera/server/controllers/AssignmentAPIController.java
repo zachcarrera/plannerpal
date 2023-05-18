@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zachcarrera.server.dto.NewAssignment;
 import com.zachcarrera.server.models.Assignment;
+import com.zachcarrera.server.models.Course;
 import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.services.AssignmentService;
+import com.zachcarrera.server.services.CourseService;
 
 import jakarta.validation.Valid;
 
@@ -31,6 +34,9 @@ public class AssignmentAPIController {
     @Autowired
     private AssignmentService assignmentService;
 
+    @Autowired
+    private CourseService courseService;
+
     // ----- ALL ASSIGNMENTS -----
     @GetMapping("")
     public ResponseEntity<List<Assignment>> allAssignments(
@@ -40,10 +46,12 @@ public class AssignmentAPIController {
         System.out.println(loggedInUser.getFirstName());
 
         if (sortBy != null) {
-            return ResponseEntity.ok().body((assignmentService.findNewestAssignments()));
+            return ResponseEntity.ok().body((assignmentService.allAssignmentsForUser(loggedInUser)));
+            // return ResponseEntity.ok().body((assignmentService.findNewestAssignments()));
 
         }
-        return ResponseEntity.ok().body(assignmentService.allAssignments());
+        return ResponseEntity.ok().body(assignmentService.allAssignmentsForUser(loggedInUser));
+        // return ResponseEntity.ok().body(assignmentService.allAssignments());
     }
 
     // ----- ONE ASSIGNMENT -----
@@ -54,14 +62,24 @@ public class AssignmentAPIController {
 
     // ----- NEW ASSIGNMENT -----
     @PostMapping("")
-    public ResponseEntity<Object> createAssignment(@Valid @RequestBody Assignment assignment, BindingResult result) {
+    public ResponseEntity<Object> createAssignment(@Valid @RequestBody NewAssignment newAssignment,
+            BindingResult result) {
         if (result.hasErrors()) {
+            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
+            // ApiError(result, HttpStatus.BAD_REQUEST));
             return ResponseEntity.status(400).body(result.getAllErrors());
         }
 
-        Assignment savedAssignment = assignmentService.createAssignment(assignment);
-        return ResponseEntity.ok().body(savedAssignment);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Course course = courseService.findCourse(newAssignment.getCourseId());
 
+        Assignment savedAssignment = assignmentService
+                .createAssignment(new Assignment(newAssignment.getName(), newAssignment.getDueDate(),
+                        newAssignment.getPriority(), course, loggedInUser));
+        // assignment.setUser(loggedInUser);
+
+        // Assignment savedAssignment = assignmentService.reateAssignment(assignment);
+        return ResponseEntity.ok().body(savedAssignment);
     }
 
     // ----- DELETE ASSIGNMENT -----
