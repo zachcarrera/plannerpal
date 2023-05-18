@@ -7,6 +7,7 @@ export const Progress = () => {
     const { data: classes, isLoading } = useQuery(["classes"], () =>
         getAllCourses()
     );
+    if (!isLoading) console.log(classes);
 
     return (
         <div className="mx-auto my-4 w-1/2 bg-white py-2">
@@ -18,14 +19,15 @@ export const Progress = () => {
                 <div key={oneClass.id} className="mx-auto my-2 w-3/4 ">
                     <h2 className="text-center text-2xl">{oneClass.name}</h2>
                     <ProgressBar
-                        percentage={
-                            Math.floor(
-                                oneClass.assignments.reduce(
-                                    (sum, assignment) => sum + 1,
-                                    0
-                                ) / oneClass.assignments.length
-                            ) * 100
-                        }
+                        percentage={Math.floor(
+                            (oneClass.assignments.reduce((sum, assignment) => {
+                                let increment = 0;
+                                if (assignment.completed) increment = 1;
+                                return sum + increment;
+                            }, 0) /
+                                oneClass.assignments.length) *
+                                100
+                        )}
                     />
                 </div>
             ))}
