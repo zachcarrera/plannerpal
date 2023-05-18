@@ -42,6 +42,11 @@ export const getAllAssignments = async () => {
     return res.data;
 };
 
+export const getTop3Assignments = async () => {
+    const res = await http.get("/assignments?sort_by=created_at");
+    return res.data;
+};
+
 export const getOneAssignment = async (id) => {
     const res = await http.get(`/assignments/${id}`);
     return res.data;
