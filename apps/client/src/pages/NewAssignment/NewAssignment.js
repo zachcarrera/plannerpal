@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { createAssignment, getAllCourses } from "../../services";
@@ -6,6 +6,7 @@ import { LoadSpinner } from "../../components";
 import { useNavigate } from "react-router-dom";
 
 export const NewAssignment = () => {
+    const queryClient = useQueryClient();
     const {
         register,
         handleSubmit,
@@ -22,6 +23,10 @@ export const NewAssignment = () => {
 
     const mutation = useMutation({
         mutationFn: (newAssignment) => createAssignment(newAssignment),
+        onSuccess: (data) =>
+            queryClient.invalidateQueries({
+                queryKey: ["assignments", "top3"],
+            }),
         onError: (error) => console.log(error),
     });
 
@@ -85,7 +90,9 @@ export const NewAssignment = () => {
                                 max="5"
                                 min="1"
                                 className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
-                                {...register("priority")}
+                                {...register("priority", {
+                                    valueAsNumber: true,
+                                })}
                             />
                         </div>
                         <div className="mb-2">
@@ -94,7 +101,9 @@ export const NewAssignment = () => {
                             </label>
                             <select
                                 className="mt-1 w-full rounded-lg border-gray-200 shadow-sm focus:border-blue-300 focus:ring-blue-500"
-                                {...register("course", { valueAsNumber: true })}
+                                {...register("courseId", {
+                                    valueAsNumber: true,
+                                })}
                             >
                                 {classes?.map((oneClass) => (
                                     <option
