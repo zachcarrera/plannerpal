@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.zachcarrera.server.exception.AssignmentNotFoundException;
 import com.zachcarrera.server.models.Assignment;
+import com.zachcarrera.server.models.User;
 import com.zachcarrera.server.repositories.AssignmentRepository;
 
 @Service
@@ -17,6 +18,10 @@ public class AssignmentService {
     // ----- FIND ALL -----
     public List<Assignment> allAssignments() {
         return assignmentRepository.findAll();
+    }
+
+    public List<Assignment> allAssignmentsForUser(User user) {
+        return assignmentRepository.findByUser(user);
     }
 
     public List<Assignment> findNewestAssignments() {
