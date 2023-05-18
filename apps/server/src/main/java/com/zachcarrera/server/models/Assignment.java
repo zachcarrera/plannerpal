@@ -49,6 +49,11 @@ public class Assignment {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean completed;
 
@@ -78,6 +83,14 @@ public class Assignment {
         this.dueDate = dueDate;
         this.priority = priority;
         this.course = course;
+    }
+
+    public Assignment(String name, Date dueDate, Integer priority, Course course, User user) {
+        this.name = name;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.course = course;
+        this.user = user;
     }
 
     // createdAt updatedAt automation
@@ -155,6 +168,14 @@ public class Assignment {
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
