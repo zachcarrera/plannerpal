@@ -22,47 +22,51 @@ import com.zachcarrera.server.repositories.UserRepository;
 @Component
 public class DatabaseInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
-    @Autowired
-    private RoleRepository roleRepository;
+        @Autowired
+        private RoleRepository roleRepository;
 
-    @Autowired
-    private CourseRepository courseRepository;
+        @Autowired
+        private CourseRepository courseRepository;
 
-    @Autowired
-    private AssignmentRepository assignmentRepository;
+        @Autowired
+        private AssignmentRepository assignmentRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+        @Autowired
+        private PasswordEncoder passwordEncoder;
 
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
+        @Override
+        public void onApplicationEvent(ApplicationReadyEvent event) {
 
-        System.out.println("first print");
+                System.out.println("first print");
 
-        Course course1 = courseRepository.save(new Course("Physics"));
-        Course course2 = courseRepository.save(new Course("Math"));
-        assignmentRepository.save(new Assignment("Project Manager",
-                new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(5)), 3, course1));
-        assignmentRepository.saveAll(List.of(
-                new Assignment("CareSoft", new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9)), 4,
-                        course2),
-                new Assignment("Book Club", new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(15)), 2,
-                        course1)));
-        // assignmentRepository.save(new Assignment("Project Manager", new
-        // Date(1688972400000L), 3));
-        // assignmentRepository.saveAll(List.of(new Assignment("CareSoft", new
-        // Date(1688972400000L), 4), new Assignment("Book Club", new
-        // Date(1688972400000L), 2)));
+                Course course1 = courseRepository.save(new Course("Physics"));
+                Course course2 = courseRepository.save(new Course("Math"));
+                User zach = userRepository
+                                .save(new User("Zach", "Carrera", "zach@mail.com", passwordEncoder.encode("password")));
+                User mj = userRepository
+                                .save(new User("Michael", "Jordan", "mj@mail.com", passwordEncoder.encode("password")));
+                assignmentRepository.save(new Assignment("Project Manager",
+                                new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(5)), 3, course1, zach));
+                assignmentRepository.saveAll(List.of(
+                                new Assignment("CareSoft",
+                                                new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9)), 4,
+                                                course2, mj),
+                                new Assignment("Book Club",
+                                                new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(15)), 2,
+                                                course1, zach)));
+                // assignmentRepository.save(new Assignment("Project Manager", new
+                // Date(1688972400000L), 3));
+                // assignmentRepository.saveAll(List.of(new Assignment("CareSoft", new
+                // Date(1688972400000L), 4), new Assignment("Book Club", new
+                // Date(1688972400000L), 2)));
 
-        roleRepository.saveAll(List.of(new Role("ROLE_STUDENT"), new Role("ROLE_INSTRUCTOR")));
+                roleRepository.saveAll(List.of(new Role("ROLE_STUDENT"), new Role("ROLE_INSTRUCTOR")));
 
-        userRepository.save(new User("Zach", "Carrera", "zach@mail.com", passwordEncoder.encode("password")));
+                System.out.println("app started");
 
-        System.out.println("app started");
-
-    }
+        }
 
 }
