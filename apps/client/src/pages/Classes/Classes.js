@@ -15,6 +15,20 @@ export const Classes = () => {
         <div className="mx-auto my-2 w-1/2 rounded bg-white p-2 shadow">
             <h1 className="mb-4 text-center text-3xl">Classes</h1>
             {isLoading && <LoadSpinner />}
+            <div className="mx-auto w-3/4">
+                {toggleForm ? (
+                    <CreateClassForm
+                        handleToggle={() => setToggleForm(false)}
+                    />
+                ) : (
+                    <button
+                        onClick={() => setToggleForm(true)}
+                        className=" ml-auto block rounded bg-blue-600 px-4 py-2 text-lg font-normal text-white hover:bg-blue-500"
+                    >
+                        + Add
+                    </button>
+                )}
+            </div>
 
             {classes?.map((oneClass) => (
                 <div key={oneClass.id} className="mx-auto w-3/4">
@@ -38,7 +52,7 @@ export const Classes = () => {
                 </div>
             ))}
 
-            <div className="mx-auto w-3/4">
+            {/* <div className="mx-auto w-3/4">
                 {toggleForm ? (
                     <CreateClassForm
                         handleToggle={() => setToggleForm(false)}
@@ -57,7 +71,7 @@ export const Classes = () => {
                     <li>Assignment 2</li>
                     <li>Assignment 3</li>
                 </ul>
-            </div>
+            </div> */}
         </div>
     );
 };
