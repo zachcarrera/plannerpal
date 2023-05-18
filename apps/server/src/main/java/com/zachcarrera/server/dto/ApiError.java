@@ -16,6 +16,12 @@ public class ApiError {
         this.timestamp = timestamp;
     }
 
+    public ApiError(String message, HttpStatus status) {
+        this.message = message;
+        this.status = status;
+        this.timestamp = new Date(System.currentTimeMillis());
+    }
+
     public String getMessage() {
         return message;
     }
