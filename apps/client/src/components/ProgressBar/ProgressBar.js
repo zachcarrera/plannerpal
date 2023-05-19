@@ -107,7 +107,10 @@ const WIDTHS = [
 export const ProgressBar = (props) => {
     const { percentage = 100 } = props;
     return (
-        <div className=" my-2 h-8 w-full rounded-full bg-gray-300">
+        <div className="my-2 h-8 w-full rounded-full bg-gray-300">
+            {percentage === 0 && (
+                <span className="p-4 font-semibold text-gray-700">{`${percentage}%`}</span>
+            )}
             <div
                 className={`h-full ${WIDTHS[percentage]} flex items-center justify-end rounded-full bg-green-500 `}
             >
